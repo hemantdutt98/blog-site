@@ -1,16 +1,21 @@
-<h1>Here are all the blogs</h1>
-<%  blogs.forEach(function(blog){ %>
-    <h2>
-        <%= blog.title%>
-    </h2>
-    <div>
-        <img src="<%= blog.image%>">
-    </div>
-    <div>
-        <%= blog.created%>
-    </div>
-    <div>
-        <%= blog.description%>
-    </div>
+<%- include ('partials/header') %>
 
-<% }) %>
+<div class="container text-center">
+    <h1>Here are all the blogs</h1>
+    <% blogs.forEach(function(blog){ %>
+        <h2>
+            <%= blog.title%>
+        </h2>
+        <div>
+            <img src="<%= blog.image%>">
+        </div>
+        <div>
+            <%= blog.created%>
+        </div>
+        <div>
+            <%= blog.description%>
+        </div>
+    
+        <% }) %>
+</div>
+<%- include ('partials/footer') %>
