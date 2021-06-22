@@ -3,6 +3,7 @@ var express    = require("express"),
     bodyParser = require("body-parser"),
     app        =express()
 app.set("viewengine","ejs")
+app.use(express.static(__dirname + '/public'));
 
 //connecting mongoose to mongodb localhost
 mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -29,6 +30,7 @@ var Blog = mongoose.model("Blog",blogSchema)
 app.get("/",(req,res)=>{
     res.render("blogs.ejs")
 })
+// route 1
 app.get("/blogs",(req,res)=>{
     Blog.find({},(error,blogs)=>{
         if(error){
@@ -36,6 +38,21 @@ app.get("/blogs",(req,res)=>{
         }
         else{
             res.render("blogs.ejs",{blogs:blogs})
+        }
+    })
+})
+//route 2 and 3 to create and post
+app.get("/blogs/new",(req,res)=>{
+    res.render("new.ejs")
+})
+app.post("/blogs",(req,res)=>{
+    // creating blog here
+    Blog.create(req.body.blog,(err,newBlog)=>{
+        if(err){
+            res.render("new.ejs")
+        }
+        else{
+            res.redirect("/blogs")
         }
     })
 })
