@@ -1,0 +1,25 @@
+<%- include ('partials/header') %>
+<div class="container d-flex justify-content-center">
+    <div class="card my-3" style="width: 36rem;">
+        <div class="card-header">
+            <h5 class="card-title">
+                <%= blog.title %> 
+            </h5>
+        </div>
+        
+        <img src="<%= blog.image %>" class="card-img-top">
+        <div class="card-body">
+            <blockquote>
+                <%= blog.created.toDateString()%>
+            </blockquote>
+            <p class="card-text"><%- blog.description%>
+            
+            </p>
+
+
+
+        </div>
+    </div>
+</div>
+   
+<%- include ('partials/footer') %>

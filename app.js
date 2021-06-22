@@ -15,17 +15,17 @@ var blogSchema = new mongoose.Schema({
     title: String,
     image: String,
     created: { type:Date, default:Date.now()},
-    decription: String
+    description: String
 })
 
 //making model for the database\
 var Blog = mongoose.model("Blog",blogSchema)
 
-// adding first element to the database using create
+//adding first element to the database using create
 // Blog.create({
 //     title:"my first blog",
 //     image: "https://images.unsplash.com/photo-1593642702909-dec73df255d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80",
-
+//     description : "kjafbvjabvgdvbsdvsvdcs dvbjsd vsldvnsdbvsdn"
 // })
 app.get("/",(req,res)=>{
     res.render("blogs.ejs")
@@ -49,10 +49,22 @@ app.post("/blogs",(req,res)=>{
     // creating blog here
     Blog.create(req.body.blog,(err,newBlog)=>{
         if(err){
-            res.render("new.ejs")
+            res.redirect("new.ejs")
         }
         else{
             res.redirect("/blogs")
+        }
+    })
+})
+
+// 3 show route
+app.get("/blogs/:id",(req,res)=>{
+    Blog.findById(req.params.id,(error,foundBlog)=>{
+        if(error){
+            res.redirect("/blogs")
+        }
+        else{
+            res.render("show.ejs",{blog:foundBlog})
         }
     })
 })
