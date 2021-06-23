@@ -1,16 +1,19 @@
 var express    = require("express"),
     mongoose   = require ("mongoose"),
     methodOverride= require("method-override")
+    expressSanitizer = require("express-sanitizer")
     bodyParser = require("body-parser"),
     app        =express()
-app.set("viewengine","ejs")
-app.use(express.static(__dirname + '/public'));
-app.use(methodOverride("_method"))
-
+    path       =require("path")
 //connecting mongoose to mongodb localhost
 mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true});
-app.use(express.static("public"))
+app.set("viewengine","ejs")
+app.use(express.static(path.join(__dirname, '/public')));
+app.use(methodOverride("_method"))
 app.use(bodyParser.urlencoded({extended:true}))
+app.use(expressSanitizer())
+
+
 
 // making schema for the database
 var blogSchema = new mongoose.Schema({
@@ -50,6 +53,7 @@ app.get("/blogs/new",(req,res)=>{
 app.post("/blogs",(req,res)=>{
     // creating blog here
     Blog.create(req.body.blog,(err,newBlog)=>{
+        req.body.blog.description=req.sanitize( req.body.blog.description)
         if(err){
             res.redirect("new.ejs")
         }
@@ -83,12 +87,25 @@ app.get("/blogs/:id/edit",(req,res)=>{
     })
 })
 app.put("/blogs/:id",(req,res)=>{
+    req.body.blog.description=req.sanitize( req.body.blog.description)
     Blog.findByIdAndUpdate(req.params.id,req.body.blog,(error,updatedBlog)=>{
         if(error){
             res.render("/blogs")
         }
         else{
             res.redirect("/blogs/"+req.params.id)
+        }
+    })
+})
+
+// route 7 delete
+app.delete("/blogs/:id",(req,res)=>{
+    Blog.findByIdAndRemove(req.params.id,(error)=>{
+        if(error){
+            res.redirect("/blogs")
+        }
+        else{
+            res.redirect('/blogs')
         }
     })
 })

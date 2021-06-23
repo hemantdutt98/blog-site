@@ -17,7 +17,15 @@
             </p>
         </div>
         <div class="card-footer">
-            <button class="btn btn-sm btn-outline-primary"><a href="/blogs/<%=blog._id%>/edit">Edit</a></button>
+            
+                <form action="/blogs/<%=blog._id%>/edit" class="form-group" id="delete">
+                    <button class="btn btn-sm btn-primary">Edit</button>
+                </form>
+                <form method="POST" action="/blogs/<%=blog._id%>?_method=DELETE" class="form-group" id="delete">
+                    <button class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            
+            
         </div>
     </div>
 </div>

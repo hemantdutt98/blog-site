@@ -2,32 +2,37 @@
 
 
 
-<div class="container border">
+<div class="container border ">
     <h1>Here are all the blogs</h1>
     <hr>
-    <div class="row">
-    <% blogs.forEach(function(blog){ %>
-        <div class="col-12 d-flex justify-content-center">
-            <div class="card my-3" style="width: 30rem;">
-                <img src="<%= blog.image %>" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <%= blog.title %>
-                    </h5>
-                    
-                    <p class="card-text">
-                        <%- blog.description.substring(0,100)%>...
-                        <a href="/blogs/<%= blog._id%>">read more</a>
-                    </p>
-                    <p class="card-text"><small class="text-muted"><%= blog.created.toDateString()%></small></p>
-                
+    <div class="row d-flex justify-content-center">
+        <% blogs.forEach(function(blog){ %>
+            <div class="card mb-3" style="max-width:80%;">
+                <div class="row g-0">
+                    <div class="col-4">
+                        <img src="<%= blog.image %>" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= blog.title %>
+                            </h5>
+                            <p class="card-text">
+                                <%- blog.description.substring(0,100)%>...
+                                    <a href="/blogs/<%= blog._id%>">read more</a>
+                            </p>
+                            <p class="card-text"><small class="text-muted">
+                                    <%= blog.created.toDateString()%>
+                                </small></p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    
-    <% }) %>
+            <% }) %>
+                </div>
     </div>
-</div>
+
+
         
 
 <%- include ('partials/footer') %>
