@@ -12,12 +12,12 @@
             <blockquote>
                 <%= blog.created.toDateString()%>
             </blockquote>
-            <p class="card-text"><%- blog.description%>
-            
+            <p class="card-text">
+                <%- blog.description%>
             </p>
-
-
-
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-sm btn-outline-primary"><a href="/blogs/<%=blog._id%>/edit">Edit</a></button>
         </div>
     </div>
 </div>

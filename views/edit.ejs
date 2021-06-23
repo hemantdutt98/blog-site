@@ -1,0 +1,23 @@
+<%- include ('partials/header') %>
+    <div class="container d-flex justify-content-center" style=margin-top:60px>
+
+        <div>
+            <h1>Editing the blog: <%= blog.title %></h1>
+            <a href="/blogs/<%=blog._id%>">Go back</a>
+            <hr>
+            <div>
+                <form method="POST" action="/blogs/<%=blog._id%>?_method=PUT">
+                    <div class="form-group">
+                        <input type="text" name="blog[title]" class="form-control mt-3" value="<%= blog.title %>">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="blog[image]" class="form-control mt-3" value="<%=blog.image%>">
+                    </div>
+                    <textarea  class="form-control mt-3" name="blog[description]"><%=blog.description%></textarea>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block mt-3">Update</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>

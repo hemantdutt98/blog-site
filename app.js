@@ -1,9 +1,11 @@
 var express    = require("express"),
     mongoose   = require ("mongoose"),
+    methodOverride= require("method-override")
     bodyParser = require("body-parser"),
     app        =express()
 app.set("viewengine","ejs")
 app.use(express.static(__dirname + '/public'));
+app.use(methodOverride("_method"))
 
 //connecting mongoose to mongodb localhost
 mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -57,7 +59,7 @@ app.post("/blogs",(req,res)=>{
     })
 })
 
-// 3 show route
+// 4 show route
 app.get("/blogs/:id",(req,res)=>{
     Blog.findById(req.params.id,(error,foundBlog)=>{
         if(error){
@@ -65,6 +67,28 @@ app.get("/blogs/:id",(req,res)=>{
         }
         else{
             res.render("show.ejs",{blog:foundBlog})
+        }
+    })
+})
+
+// 5th and 6th route here.. edit and update
+app.get("/blogs/:id/edit",(req,res)=>{
+    Blog.findById(req.params.id,(error,editBlog)=>{
+        if(error){
+            res.render("/blogs")
+        }
+        else{
+            res.render("edit.ejs",{blog:editBlog})
+        }
+    })
+})
+app.put("/blogs/:id",(req,res)=>{
+    Blog.findByIdAndUpdate(req.params.id,req.body.blog,(error,updatedBlog)=>{
+        if(error){
+            res.render("/blogs")
+        }
+        else{
+            res.redirect("/blogs/"+req.params.id)
         }
     })
 })
